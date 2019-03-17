@@ -27,7 +27,7 @@ public class LockFreeQueue {
 
     // put item into queue
     public boolean enqueue(int item) throws RuntimeException {
-        while (dequeue.get() <= 0);
+        while (dequeue.get() > 0);
         enqueue.incrementAndGet();
         try {
             int h = head.get();
@@ -54,7 +54,7 @@ public class LockFreeQueue {
     }
     // pool item from queue
     public int dequeue() throws RuntimeException {
-        while (enqueue.get() == 0);
+        while (enqueue.get() > 0);
         dequeue.incrementAndGet();
         try {
             int h = head.get();
