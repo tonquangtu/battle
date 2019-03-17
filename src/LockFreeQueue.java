@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /***
@@ -15,6 +17,9 @@ public class LockFreeQueue {
     private AtomicInteger head = new AtomicInteger(0);
     private AtomicInteger tail = new AtomicInteger(0);
 
+    private AtomicInteger enqueue = new AtomicInteger(0);
+    private AtomicInteger dequeue = new AtomicInteger(0);
+
     public LockFreeQueue(int maxSize) {
         this.maxSize = maxSize;
         list = new int[maxSize];
@@ -22,46 +27,58 @@ public class LockFreeQueue {
 
     // put item into queue
     public boolean enqueue(int item) throws RuntimeException {
-        int h = head.get();
-        int t = tail.get();
-        if (size(h, t) >= maxSize - 1) {
-            return false;
+        while (dequeue.get() <= 0);
+        enqueue.incrementAndGet();
+        try {
+            int h = head.get();
+            int t = tail.get();
+            if (size(h, t) >= maxSize - 1) {
+                return false;
+            }
+            int curr = tail.getAndIncrement();
+            t = curr + 1;
+            if (size(h, t) >= maxSize) {
+                tail.decrementAndGet();
+                return false;
+            }
+            curr = curr % maxSize;
+            list[curr] = item;
+            if (t >= maxSize) {
+                tail.compareAndSet(t, t % maxSize);
+            }
+            return true;
+        } finally {
+            enqueue.decrementAndGet();
         }
-        int curr = tail.getAndIncrement();
-        t = curr + 1;
-        if (size(h, t) >= maxSize) {
-            tail.decrementAndGet();
-            return false;
-        }
-        curr = curr % maxSize;
-        list[curr] = item;
-        if (t >= maxSize) {
-            tail.compareAndSet(t, t % maxSize);
-        }
-        return true;
-    }
 
+    }
     // pool item from queue
     public int dequeue() throws RuntimeException {
-        int h = head.get();
-        int t = tail.get();
-        if (h == t) {
-            return -1;
+        while (enqueue.get() == 0);
+        dequeue.incrementAndGet();
+        try {
+            int h = head.get();
+            int t = tail.get();
+            if (h == t) {
+                return -1;
+            }
+            int curr = head.getAndIncrement();
+            // have concurrent dequeue here
+            if (curr != h && (h < t && curr >= h)) {
+                head.decrementAndGet();
+                return -2;
+            }
+            h = curr + 1;
+            curr = curr % maxSize;
+            int item = list[curr];
+            list[curr] = 0;
+            if (h >= maxSize) {
+                head.compareAndSet(t, t % maxSize);
+            }
+            return item;
+        } finally {
+            dequeue.decrementAndGet();
         }
-        int curr = head.getAndIncrement();
-        // have concurrent dequeue here
-        if (curr != h && (h < t && curr >= h)) {
-            head.decrementAndGet();
-            return -2;
-        }
-        h = curr + 1;
-        curr = curr % maxSize;
-        int item = list[curr];
-        list[curr] = 0;
-        if (h >= maxSize) {
-            head.compareAndSet(t, t % maxSize);
-        }
-        return item;
     }
 
     public int size() {
