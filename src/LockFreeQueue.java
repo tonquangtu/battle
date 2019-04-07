@@ -1,7 +1,5 @@
 import java.util.ArrayList;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /***
@@ -9,7 +7,9 @@ import java.util.concurrent.atomic.AtomicInteger;
  * head -> hold current position for dequeue
  * queue contain positive integer (> 0)
  * Hàng đợi có thể xoay vòng. tail -> (0, maxSize - 1), head -> (0, maxSize - 1)
- *
+ * Can concurrently enqueuing and concurrently dequeuing
+ * Prevent enqueue when have another dequeue
+ * Prevent dequeue when have another enqueue
  */
 public class LockFreeQueue {
     private int maxSize;
