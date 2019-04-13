@@ -80,6 +80,12 @@ class TestTaskScheduler {
         var input2 = new int[][] {{4, 6}, {3, 4}, {2, 3}, {3, 5}, {1, 2}, {1, 3}, {5, 6}, {7, 2}, {4, 1}};
         var N2 = 7;
         tester.test(N2, input2);
+        System.out.println("------------------");
+
+        // test 3
+        var input3 = new int[][] {{9, 5}, {8, 4}, {8, 5}, {7, 5}, {4, 1}, {4, 2}, {4, 3}, {5, 2}, {5, 3}};
+        var N3 = 9;
+        tester.test(N3, input3);
     }
 
     public void test(int N, int [][] input) {
