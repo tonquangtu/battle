@@ -31,7 +31,7 @@ public class TaskScheduler {
         int[] outDeg = new int[N + 1];
         for (int i = 1; i <= N; i++) {
             outDeg[i] = 0;
-            adjacent.put(i, new ArrayList<>(N + 1));
+            adjacent.put(i, new ArrayList<>(N));
         }
         // count number of out deg for each vertex in graph
         for (int i = 0; i < edges.length; i++) {
