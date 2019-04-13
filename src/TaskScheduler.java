@@ -42,7 +42,6 @@ public class TaskScheduler {
         // take all of vertex have out deg = 0 out of graph
         // and remove all edges of these vertex out of graph
         ArrayList<Integer> group;
-        ArrayList<Integer> fromVertices;
         while (true) {
             group = new ArrayList<>();
             for (int i = 1; i <= N; i++) {
@@ -56,8 +55,7 @@ public class TaskScheduler {
             }
             // remove all edge of these vertex in this group from graph
             for (Integer gv : group) {
-                fromVertices = adjacent.get(gv);
-                for (Integer v : fromVertices) {
+                for (Integer v : adjacent.get(gv)) {
                     outDeg[v]--;
                 }
             }
