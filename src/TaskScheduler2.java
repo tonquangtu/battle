@@ -53,8 +53,8 @@ public class TaskScheduler2 {
         // take all of vertex have out deg = 0 out of graph
         // and remove all edges of these vertex out of graph
         while (group.size() > 0) {
-            tmpGroup = new ArrayList<>();
             result.add(group);
+            tmpGroup = new ArrayList<>();
             for (Integer gv : group) {
                 for (Integer v : adjacent.get(gv)) {
                     outDeg[v]--;
