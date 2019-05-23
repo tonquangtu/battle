@@ -3,7 +3,9 @@ public class CountingLight {
     public static void main(String[] args) {
         var counter = new CountingLight();
 //        var input = new int [] {2, 1, 3, 5, 4};
-        var input = new int [] {5, 4, 3, 2, 1, 6};
+//        var input = new int [] {5, 4, 3, 2, 1, 6};
+//        var input = new int [] {1, 2, 3, 4, 5, 6};
+        var input = new int [] {3, 2, 1, 4, 5, 6};
         var result = counter.counting(input);
         System.out.println(result);
     }
@@ -13,7 +15,7 @@ public class CountingLight {
         boolean[] visit = new boolean[light.length + 1]; // to mark light i is visit or not
         for (int i = 0; i <= light.length; i++) {
             mark[i] = false; // turn of the light
-            visit[i] = false; // mark i not visit
+            visit[i] = false; // mark light i is not visit
         }
 
         int count = 0;
