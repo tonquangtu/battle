@@ -2,10 +2,12 @@ public class CountingLight {
 
     public static void main(String[] args) {
         var counter = new CountingLight();
-//        var input = new int [] {2, 1, 3, 5, 4};
+//        var input = new int [] {2, 1, 3, 5, 4}; // 3
+//        var input = new int [] {1, 3, 4, 2, 5}; // 3
+        var input = new int [] {2, 3, 4, 1, 5}; // 2
 //        var input = new int [] {5, 4, 3, 2, 1, 6};
 //        var input = new int [] {1, 2, 3, 4, 5, 6};
-        var input = new int [] {3, 2, 1, 4, 5, 6};
+//        var input = new int [] {3, 2, 1, 4, 5, 6};
         var result = counter.counting(input);
         System.out.println(result);
     }
