@@ -11,6 +11,11 @@ public class ChocolateBarCutting {
         System.out.println(cutter.cuttingChocolate(new int[] {1, 2, 3, 3, 4, 4}, 3)); // expect 4
         System.out.println(cutter.cuttingChocolate(new int[] {3, 4, 5, 3, 3, 2}, 3)); // expect 5
         System.out.println(cutter.cuttingChocolate(new int[] {2, 2, 2, 2, 2, 2}, 6)); // expect 2
+        System.out.println(cutter.cuttingChocolate(new int[] {1, 2, 3, 4, 5, 6}, 4)); // expect 4
+        System.out.println(cutter.cuttingChocolate(new int[] {1, 2, 3, 4, 5, 6}, 3)); // expect 6
+        System.out.println(cutter.cuttingChocolate(new int[] {1, 4, 0, 4, 4, 9}, 2)); // expect 9
+        System.out.println(cutter.cuttingChocolate(new int[] {1, 4, 0, 4, 4, 9}, 4)); // expect 4
+        System.out.println(cutter.cuttingChocolate(new int[] {1, 3, 3, 3, 0, 30}, 3)); // expect 4
     }
 
     public int cuttingChocolate(int[] bar, int k) {
