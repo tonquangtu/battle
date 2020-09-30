@@ -21,10 +21,10 @@ public class ChocolateBarCutting {
     public int cuttingChocolate(int[] bar, int k) {
         int sum = 0;
         int min = 0;
-        for (int i = 0; i < bar.length; i++) {
-            sum += bar[i];
-            if (min > bar[i]) {
-                min = bar[i];
+        for (int value : bar) {
+            sum += value;
+            if (min > value) {
+                min = value;
             }
         }
 
